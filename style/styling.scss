@@ -1,0 +1,7 @@
+@import 'partials/normalize';
+@import 'partials/varibles';
+
+#game {
+  background-color: $canvas-bg;
+  margin: 0 auto;
+}
