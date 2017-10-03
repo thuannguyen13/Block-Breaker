@@ -395,4 +395,5 @@ template {
 
 #game {
   background-color: #ededed;
-  margin: 0 auto; }
+  margin: 0 auto;
+  cursor: none; }
