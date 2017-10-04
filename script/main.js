@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var canvas = document.getElementById('game');
     var ctx = canvas.getContext('2d');
+    var scoreDisplay = document.getElementById('score');
+    var liveDisplay = document.getElementById('live');
 
     // ball setting
     var ballRadius = 10;
@@ -48,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // DRAW GAME ELEMENTS
 
     function drawGameBoard() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = 1140;
+        canvas.height = 768;
     }
 
     function update() {
@@ -59,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
         collisionDetection();
         drawBricks();
         drawScore();
-        drawLives();
         requestAnimationFrame(update);
     }
 
@@ -87,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     bricks[c][r].y = bricksY;
                     ctx.beginPath();
                     ctx.rect(bricksX, bricksY, brickWidth, brickHeight);
-                    ctx.fillStyle = '#0000ff';
+                    ctx.fillStyle = "#ffa100";
                     ctx.fill();
                     ctx.closePath();
                 }
@@ -100,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ballY += ballMoveY;
         ctx.beginPath();
         ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2, false);
-        ctx.fillStyle = "#ff0000";
+        ctx.fillStyle = "#fff";
         ctx.fill();
         ctx.closePath();
     }
@@ -108,21 +109,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function drawPaddle() {
         ctx.beginPath();
         ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-        ctx.fillStyle = '#ff0000';
+        ctx.fillStyle = '#00e0ff';
         ctx.fill();
         ctx.closePath();
     }
 
     function drawScore() {
-        ctx.font = '16px Arial';
-        ctx.fillStyle = '#000';
-        ctx.fillText('Score: ' + score, canvas.width / 2, canvas.height / 2);
-    }
-
-    function drawLives() {
-        ctx.font = '16px Arial';
-        ctx.fillStyle = '#000';
-        ctx.fillText('Live: ' + lives, canvas.width / 2, (canvas.height / 2) + 20);
+        scoreDisplay.innerHTML = "Score: "+score;
+        liveDisplay.innerHTML = "Live: "+lives;
     }
 
     function collisionDetection() {
@@ -131,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
             for (r = 0; r < brickRow; r++) {
                 var br = bricks[c][r];
                 if (br.status == 1) {
-                    if (ballX > br.x && ballX < br.x + brickWidth &&
+                    if (ballX > br.x && ballX < br.x + (brickWidth + ballRadius) &&
                         ballY > br.y && ballY < br.y + (brickHeight + ballRadius)) {
                         ballMoveY = -ballMoveY;
                         br.status = 0;
@@ -147,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // ball collision for left and right side
         if (ballX + ballMoveX < ballRadius || ballX + ballMoveX > canvas.width - ballRadius) {
-            ballMoveX = (Math.atan2(ballMoveY, paddleX) * (Math.PI / 180)) + (-ballMoveX);
+            ballMoveX = -ballMoveX;
         }
 
         // ball collision for top side
@@ -165,7 +159,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // between paddle, ball, display board
         if (ballY + ballMoveY > canvas.height - (ballRadius + paddleHeight)) {
             if (paddleX <= ballX && ballX <= paddleX + paddleWidth) {
-                ballMoveY = -ballMoveY;
+                var newAngle = Math.atan2(ballY - canvas.height - paddleHeight, ballX - paddleX);
+                ballMoveY = -ballMoveY + newAngle;
             } else {
                 lives--;
                 if (!lives) { // return faulty

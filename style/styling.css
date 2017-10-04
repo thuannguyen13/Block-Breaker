@@ -393,7 +393,43 @@ template {
 [hidden] {
   display: none; }
 
+body {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
 #game {
-  background-color: #ededed;
-  margin: 0 auto;
-  cursor: none; }
+  background-image: -webkit-gradient(linear, left top, right top, from(#868f96), to(#596164));
+  background-image: -webkit-linear-gradient(left, #868f96 0%, #596164 100%);
+  background-image: -o-linear-gradient(left, #868f96 0%, #596164 100%);
+  background-image: linear-gradient(to right, #868f96 0%, #596164 100%);
+  cursor: none;
+  -webkit-box-shadow: rgba(70, 70, 70, 0.2) 0px 2px 2px, rgba(70, 70, 70, 0.2) 0px 4px 4px, rgba(70, 70, 70, 0.2) 0px 8px 8px, rgba(70, 70, 70, 0.2) 0px 16px 16px, rgba(70, 70, 70, 0.2) 0px 32px 32px, rgba(70, 70, 70, 0.2) 0px 64px 64px;
+  box-shadow: rgba(70, 70, 70, 0.2) 0px 2px 2px, rgba(70, 70, 70, 0.2) 0px 4px 4px, rgba(70, 70, 70, 0.2) 0px 8px 8px, rgba(70, 70, 70, 0.2) 0px 16px 16px, rgba(70, 70, 70, 0.2) 0px 32px 32px, rgba(70, 70, 70, 0.2) 0px 64px 64px;
+  margin-top: 100px; }
+
+.main {
+  position: relative;
+  height: 900px; }
+
+.font {
+  font-family: sans-serif;
+  font-size: 30px; }
+
+#score {
+  position: absolute;
+  top: 20px; }
+
+#live {
+  position: absolute;
+  top: 20px;
+  right: 0; }
